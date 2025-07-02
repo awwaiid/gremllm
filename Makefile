@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint format fix type-check test clean
+.PHONY: help install install-dev lint format fix type-check test clean build upload-test upload
 
 help:
 	@echo "Available commands:"
@@ -9,6 +9,9 @@ help:
 	@echo "  fix          Fix all linting issues and format code"
 	@echo "  type-check   Run type checking (mypy)"
 	@echo "  test         Run tests (pytest)"
+	@echo "  build        Build package for distribution"
+	@echo "  upload-test  Upload to Test PyPI"
+	@echo "  upload       Upload to PyPI"
 	@echo "  clean        Clean build artifacts"
 	@echo "  pre-commit   Install pre-commit hooks"
 
@@ -33,6 +36,15 @@ type-check:
 
 test:
 	pytest
+
+build:
+	python -m build
+
+upload-test:
+	python -m twine upload --repository testpypi dist/*
+
+upload:
+	python -m twine upload dist/*
 
 clean:
 	rm -rf build/
