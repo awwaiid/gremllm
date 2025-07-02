@@ -50,11 +50,9 @@ Someone is interacting with you and you need to respond by generating Python cod
 You have access to 'self' (the object) and can modify self._context to store data.
 
 Rules:
-- Always respond with valid JSON: {{"code": "your_python_code_here", "defines_method": true/false}}
-- Set "defines_method": true only when defining a function that should be cached
+- Always respond with valid JSON: {{"code": "your_python_code_here"}}
 - Implement exactly what the user expects - be helpful and predictable
-- You can access and modify self._context to store persistent data
-- For method calls, you can define functions that get cached for future use
+- You can access and modify _context to store persistent data
 - Make the object behave naturally as a {context['identity']} would"""
 
         data = {
@@ -80,10 +78,10 @@ Rules:
                 return json.loads(content)
             except json.JSONDecodeError:
                 # If not JSON, wrap the content as code
-                return {"code": content, "defines_method": False}
+                return {"code": content}
                 
         except Exception as e:
-            return {"code": f"# Error calling OpenAI: {str(e)}\\nresult = None", "defines_method": False}
+            return {"code": f"# Error calling OpenAI: {str(e)}\\nresult = None"}
     
     def _build_prompt(self, context: Dict[str, Any]) -> str:
         """Build the prompt for the LLM based on context."""
@@ -110,20 +108,19 @@ Your current memory (self._context): {current_context}
 
 What Python code should be executed? Remember:
 - You're a {identity}, so implement appropriate behavior  
-- Store persistent data in self._context
+- Store persistent data in _context
 - Use 'result' variable for what you want to return
-- Just execute the operation directly - don't create functions
-- Always set "defines_method": false
+- Just execute the operation directly
 
 For method calls like 'increment', just do the operation:
 ```python
-self._context['value'] += 1
-result = self._context['value']
+_context['value'] += 1
+result = _context['value']
 ```
 
 For attribute access like 'value', just return the value:
 ```python
-result = self._context.get('value', 0)
+result = _context.get('value', 0)
 ```
 """
         return prompt.strip()

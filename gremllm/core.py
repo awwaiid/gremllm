@@ -84,25 +84,21 @@ class Gremllm:
     
     def _execute_code(self, code: str, method_name: str, *args, **kwargs) -> Any:
         """
-        Execute LLM-generated code in the instance scope.
+        Execute LLM-generated code in the instance context.
         """
-        # Create a namespace that includes the instance as 'self'
-        namespace = {
-            'self': self,
+        # Create a namespace that gives the AI direct access to instance internals
+        # Similar to IPython embed - the AI can access all instance attributes directly
+        namespace = self.__dict__.copy()
+        namespace.update({
             'args': args,
             'kwargs': kwargs,
-            '_context': self._context,  # Direct reference to context
-        }
+            'self': self,
+        })
         
-        print(f"Exec: {code}")
-        print(f"Context before: {dict(self._context)}")
-        
-        # Execute in the namespace
+        # Execute the code - AI has full access to instance state
         exec(code, globals(), namespace)
         
-        print(f"Context after: {dict(self._context)}")
-        
-        # Return the result if available
+        # Return the result
         return namespace.get('result', None)
     
     def __repr__(self) -> str:
