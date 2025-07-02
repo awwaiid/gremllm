@@ -21,7 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "requests>=2.25.0",
+    "llm>=0.12.0",
     "python-dotenv>=0.19.0",
 ]
 

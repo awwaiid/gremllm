@@ -9,10 +9,11 @@ import gremllm
 def main():
     print("=== Gremllm Counter Example ===")
     print("This demonstrates gremllm-powered dynamic objects")
-    print("Make sure you have OPENAI_API_KEY in your .env file\n")
+    print("Make sure you have configured your LLM (run: llm install llm-openai and llm keys set openai)\n")
 
     try:
         # Create a new counter - the gremllm will implement its behavior
+        # You can specify different models: gremllm.new("counter", model="claude-3-5-sonnet-20241022")
         counter = gremllm.new("counter")
         print(f"✓ Created counter: {counter}")
 
