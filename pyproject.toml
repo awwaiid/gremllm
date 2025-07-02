@@ -5,9 +5,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "gremllm"
 version = "0.1.0"
-description = "Put gremlins IN your code - AI-powered dynamic objects"
+description = "Put gremllms in your code. They are quite helpful."
 readme = "README.md"
 requires-python = ">=3.8"
+license = {text = "MIT"}
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -43,7 +44,7 @@ include = ["gremllm*"]
 # Ruff configuration (replaces black, flake8, isort, etc.)
 [tool.ruff]
 target-version = "py38"
-line-length = 88
+line-length = 150
 
 [tool.ruff.lint]
 select = [

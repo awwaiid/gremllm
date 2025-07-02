@@ -8,24 +8,24 @@ import gremllm
 
 def main():
     print("=== Gremllm Counter Example ===")
-    print("This demonstrates AI-powered dynamic objects using OpenAI")
+    print("This demonstrates gremllm-powered dynamic objects")
     print("Make sure you have OPENAI_API_KEY in your .env file\n")
 
     try:
-        # Create a new counter - the AI will implement its behavior
+        # Create a new counter - the gremllm will implement its behavior
         counter = gremllm.new("counter")
         print(f"✓ Created counter: {counter}")
 
-        # Set initial value - AI decides how to handle assignment
+        # Set initial value - gremllm decides how to handle assignment
         print("\n→ Setting counter.value = 5")
         counter.value = 5
         print(f"✓ Value set: {counter}")
 
-        # Get the value - AI decides how to handle access
+        # Get the value - gremllm decides how to handle access
         print(f"\n→ Getting counter.value: {counter.value}")
 
-        # Call increment method - AI will create this method dynamically
-        print("\n→ Calling counter.increment() - AI will implement this!")
+        # Call increment method - gremllm will create this method dynamically
+        print("\n→ Calling counter.increment() - gremllm will implement this!")
         result = counter.increment()
         print(f"✓ Increment result: {result}")
         print(f"✓ New counter value: {counter.value}")
@@ -36,8 +36,10 @@ def main():
         print(f"✓ Increment(3) result: {result2}")
         print(f"✓ New counter value: {counter.value}")
 
-        # Try some other operations the AI might implement
-        print("\n→ Let's see what else this AI counter can do...")
+        print(f"\n→ counter.as_roman_numeral(): {counter.as_roman_numeral()}")
+
+        # Try some other operations the gremllm might implement
+        print("\n→ Let's see what else this gremllm counter can do...")
         print(f"→ counter.reset(): {counter.reset()}")
         print(f"✓ Counter after reset: {counter.value}")
 
@@ -47,7 +49,6 @@ def main():
 
     except Exception as e:
         print(f"❌ Error: {e}")
-        print("Make sure you have OPENAI_API_KEY set in your .env file")
 
 
 if __name__ == "__main__":

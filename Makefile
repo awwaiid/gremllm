@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint format type-check test clean pre-commit
+.PHONY: help install install-dev lint format fix type-check test clean
 
 help:
 	@echo "Available commands:"
@@ -6,6 +6,7 @@ help:
 	@echo "  install-dev  Install package with dev dependencies"
 	@echo "  lint         Run linting (ruff check)"
 	@echo "  format       Run formatting (ruff format)"
+	@echo "  fix          Fix all linting issues and format code"
 	@echo "  type-check   Run type checking (mypy)"
 	@echo "  test         Run tests (pytest)"
 	@echo "  clean        Clean build artifacts"
@@ -23,6 +24,10 @@ lint:
 format:
 	ruff format .
 
+fix:
+	ruff check --fix .
+	ruff format .
+
 type-check:
 	mypy .
 
@@ -36,5 +41,3 @@ clean:
 	find . -type d -name __pycache__ -delete
 	find . -type f -name "*.pyc" -delete
 
-pre-commit:
-	pre-commit install

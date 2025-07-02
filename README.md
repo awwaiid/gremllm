@@ -1,35 +1,50 @@
-# Gremllm
+# gremllm
 
-Instead of getting gremlins OUT of your code, we're going to put them IN.
-
-Gremllm provides AI-powered dynamic objects that can evolve their behavior at runtime through LLM calls.
+A slight upgrade to the Gremlins in your code, we hereby present GREMLLM. This utility class can be used for a variety of purposes. Uhm. Also please don't use this and if you do please tell me because WOW. Or maybe don't tell me. Or do.
 
 ## Installation
 
-```bash
-pip install gremllm
-```
+    pip install gremllm
 
-## Quick Start
+## Usage
 
 ```python
 import gremllm
 
 counter = gremllm.new('counter')
-counter.value = 1
+counter.value = 5
 counter.increment()
-print(f"counter: {counter.value}")
+print(counter.value)  # 6?
+print(counter.to_roman_numerals()) # VI?
 ```
 
-The magic happens when you call methods on Gremllm objects - they use AI to decide what code to execute!
+Every method call and attribute access goes through a gremllm to decide what code to execute.
 
-## Features
+## Configuration
 
-- Dynamic method generation through LLM calls
-- Safe code evaluation in controlled contexts
-- Emergent behavior as objects evolve
-- Perfect for creative coding and AI experiments
+Set `OPENAI_API_KEY` in environment or `.env` file.
 
-## Warning
+## Examples
 
-This is an art project exploring AI and code. Use responsibly and never in production systems.
+Basic counter:
+```python
+counter = gremllm.new('counter')
+counter.value = 0
+counter.increment()
+counter.increment(5)
+counter.reset()
+```
+
+Shopping cart:
+```python
+cart = gremllm.new('shopping_cart')
+cart.add_item('apple', 1.50)
+cart.add_item('banana', 0.75)
+total = cart.calculate_total()
+cart.clear()
+```
+
+## Dependencies
+
+- requests
+- python-dotenv

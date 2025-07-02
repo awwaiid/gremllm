@@ -34,9 +34,7 @@ class OpenAIProvider(LLMProvider):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model
         if not self.api_key:
-            raise ValueError(
-                "OpenAI API key required. Set OPENAI_API_KEY in .env file or environment variable."
-            )
+            raise ValueError("OpenAI API key required. Set OPENAI_API_KEY in .env file or environment variable.")
 
     def generate_code(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Generate code using OpenAI API."""
