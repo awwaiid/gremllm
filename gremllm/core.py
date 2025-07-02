@@ -5,19 +5,19 @@ from .llm import LLMProvider
 
 class SmartAccessor:
     """A universal accessor that can be called as a method or used as an attribute."""
-    
+
     def __init__(self, gremllm_obj, name: str):
         self._gremllm = gremllm_obj
         self._name = name
-    
+
     def __call__(self, *args, **kwargs):
         """Handle method calls."""
         return self._gremllm._handle_dynamic_access("call", self._name, *args, **kwargs)
-    
+
     def __str__(self):
         """Handle attribute access via string conversion."""
         return str(self._gremllm._handle_dynamic_access("get", self._name))
-    
+
     def __repr__(self):
         """Handle attribute access via repr."""
         return str(self._gremllm._handle_dynamic_access("get", self._name))
@@ -80,7 +80,7 @@ class Gremllm:
         try:
             # Get code from LLM
             response = self._llm.generate_code(context)
-            print(f"Going to eval: {response}")
+            # print(f"Going to eval: {response}")
 
             # Execute the code and return result directly
             result = self._execute_code(response["code"], name, *args, **kwargs)

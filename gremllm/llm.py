@@ -116,11 +116,18 @@ What Python code should be executed? Remember:
 - Store persistent data in _context
 - Use 'result' variable for what you want to return
 - Just execute the operation directly
+- You can import any Python libraries you need (json, datetime, math, etc.)
 
 For method calls like 'increment', just do the operation:
 ```python
 _context['value'] += 1
 result = _context['value']
+```
+
+For method calls that need libraries:
+```python
+import json
+result = json.dumps(_context.get('data', {{}}))
 ```
 
 For attribute access like 'value', just return the value:
