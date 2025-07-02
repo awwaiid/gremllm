@@ -30,7 +30,7 @@ class LLMProvider(ABC):
 class OpenAIProvider(LLMProvider):
     """OpenAI API provider for LLM calls."""
 
-    def __init__(self, api_key: str = None, model: str = "gpt-3.5-turbo", **kwargs):
+    def __init__(self, api_key: str = None, model: str = "gpt-4.1-nano", **kwargs):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model
         if not self.api_key:
