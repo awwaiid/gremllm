@@ -11,6 +11,7 @@ A slight upgrade to the Gremlins in your code, we hereby present GREMLLM. This u
 ```python
 import gremllm
 
+# Be sure to tell your gremllm what sort of thing it is
 counter = gremllm.new('counter')
 counter.value = 5
 counter.increment()
@@ -26,7 +27,7 @@ Set `OPENAI_API_KEY` in environment or `.env` file.
 
 ## Examples
 
-Basic counter:
+Basic counter (see [example/counter.py](example/counter.py)):
 ```python
 counter = gremllm.new('counter')
 counter.value = 0
@@ -38,8 +39,9 @@ print(counter.value_in_hex)
 counter.reset()
 ```
 
-Shopping cart:
+Shopping cart (see [example/cart.py](example/cart.py)):
 ```python
+# Remind me to not shop at your store
 cart = gremllm.new('shopping_cart')
 cart.add_item('apple', 1.50)
 cart.add_item('banana', 0.75)
@@ -49,7 +51,7 @@ print(f"Cart total: {total}")
 cart.clear()
 ```
 
-## Dependencies
+## Other notes
 
-- requests
-- python-dotenv
+OMG THIS ACTUALLY WORKS
+
