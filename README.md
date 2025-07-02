@@ -32,6 +32,9 @@ counter = gremllm.new('counter')
 counter.value = 0
 counter.increment()
 counter.increment(5)
+counter.add_seventeen()
+print(counter.current_value)
+print(counter.value_in_hex)
 counter.reset()
 ```
 
@@ -41,6 +44,8 @@ cart = gremllm.new('shopping_cart')
 cart.add_item('apple', 1.50)
 cart.add_item('banana', 0.75)
 total = cart.calculate_total()
+print(f"Cart contents: {cart.contents_as_json()}")
+print(f"Cart total: {total}")
 cart.clear()
 ```
 

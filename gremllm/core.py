@@ -3,9 +3,29 @@ from typing import Any
 from .llm import LLMProvider
 
 
+class SmartAccessor:
+    """A universal accessor that can be called as a method or used as an attribute."""
+    
+    def __init__(self, gremllm_obj, name: str):
+        self._gremllm = gremllm_obj
+        self._name = name
+    
+    def __call__(self, *args, **kwargs):
+        """Handle method calls."""
+        return self._gremllm._handle_dynamic_access("call", self._name, *args, **kwargs)
+    
+    def __str__(self):
+        """Handle attribute access via string conversion."""
+        return str(self._gremllm._handle_dynamic_access("get", self._name))
+    
+    def __repr__(self):
+        """Handle attribute access via repr."""
+        return str(self._gremllm._handle_dynamic_access("get", self._name))
+
+
 class Gremllm:
     """
-    A dynamic object that uses AI to determine behavior at runtime.
+    A dynamic object that uses uh... the sum of human knowledge... to determine behavior at runtime.
 
     Instead of predefined methods, Gremllm objects ask an LLM what to do
     when methods are called or attributes are accessed.
@@ -18,56 +38,12 @@ class Gremllm:
         object.__setattr__(self, "_context", {})
 
     def __getattr__(self, name: str) -> Any:
-        """Handle attribute access dynamically through LLM."""
+        """Handle attribute access dynamically."""
         if name.startswith("_"):
             raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
 
-        # For method-like names, return a callable that triggers the LLM with 'call'
-        # Detect common method patterns: verbs, actions, converters, calculators
-        method_patterns = [
-            "increment",
-            "decrement",
-            "reset",
-            "clear",
-            "add",
-            "remove",
-            "update",
-            "calculate",
-            "compute",
-            "process",
-            "convert",
-            "transform",
-            "parse",
-            "format",
-            "serialize",
-            "deserialize",
-            "normalize",
-            "validate",
-            "execute",
-            "run",
-            "start",
-            "stop",
-            "pause",
-            "resume",
-            "finish",
-        ]
-
-        is_method = (
-            name in method_patterns
-            or name.endswith("()")
-            or name.startswith(("get_", "set_", "to_", "from_", "as_", "is_", "has_", "can_"))
-            or name.endswith(("_to", "_from", "_as", "_value", "_result", "_data"))
-        )
-
-        if is_method:
-
-            def method_caller(*args, **kwargs):
-                return self._handle_dynamic_access("call", name, *args, **kwargs)
-
-            return method_caller
-
-        # For ALL other attributes (including 'value'), ask LLM what to do
-        return self._handle_dynamic_access("get", name)
+        # Return a smart accessor that can handle both method calls and attribute access
+        return SmartAccessor(self, name)
 
     def __setattr__(self, name: str, value: Any) -> None:
         """Handle attribute assignment dynamically through LLM."""
