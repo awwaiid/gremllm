@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gremllm"
-version = "0.1.0"
+version = "0.2.0"
 description = "Put gremllms in your code. They are quite helpful."
 readme = "README.md"
 requires-python = ">=3.8"

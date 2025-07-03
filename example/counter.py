@@ -3,7 +3,7 @@
 Example usage of Gremllm - testing the counter example from idea.md
 """
 
-import gremllm
+from gremllm import Gremllm
 
 
 def main():
@@ -13,8 +13,8 @@ def main():
 
     try:
         # Create a new counter - the gremllm will implement its behavior
-        # You can specify different models: gremllm.new("counter", model="claude-3-5-sonnet-20241022")
-        counter = gremllm.new("counter")
+        # You can specify different models: Gremllm("counter", model="claude-3-5-sonnet-20241022")
+        counter = Gremllm("counter")
         print(f"✓ Created counter: {counter}")
 
         # Set initial value - gremllm decides how to handle assignment

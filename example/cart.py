@@ -3,7 +3,7 @@
 Test shopping cart with JSON functionality
 """
 
-import gremllm
+from gremllm import Gremllm
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
     try:
         # Create a shopping cart - you can use any model supported by llm library
         # Examples: model="claude-3-5-sonnet-20241022", model="gpt-4", etc.
-        cart = gremllm.new("shopping_cart")
+        cart = Gremllm("shopping_cart")
         print(f"✓ Created cart: {cart}")
 
         # Add some items
