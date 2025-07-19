@@ -35,6 +35,7 @@ class Gremllm:
     def __init__(self, identity: str, model: str = "gpt-4.1-nano", wet: bool = False, verbose: bool = False, **kwargs):
         # Use object.__setattr__ to avoid triggering our custom __setattr__
         object.__setattr__(self, "_identity", identity)
+        object.__setattr__(self, "_model_name", model)
         object.__setattr__(self, "_model", llm.get_model(model))
         object.__setattr__(self, "_context", {})
         object.__setattr__(self, "_wet", wet)
@@ -116,12 +117,12 @@ class Gremllm:
             verbose_val = str(self._verbose)
             wet_instructions = f"""
 - WET MODE: When returning values from METHODS (not simple attribute access), create new gremllm objects instead of plain values
-- For method results like increment(): result = Gremllm('number', wet={wet_val}, verbose={verbose_val}); result.value = 42
-- For complex operations: result = Gremllm('text', wet={wet_val}, verbose={verbose_val}); result.content = 'hello'
-- For lists/collections: result = Gremllm('list', wet={wet_val}, verbose={verbose_val}); result.items = [...]
+- For method results like increment(): result = Gremllm('number', model='{self._model_name}', wet={wet_val}, verbose={verbose_val}); result.value = 42
+- For complex operations: result = Gremllm('text', model='{self._model_name}', wet={wet_val}, verbose={verbose_val}); result.content = 'hello'
+- For lists/collections: result = Gremllm('list', model='{self._model_name}', wet={wet_val}, verbose={verbose_val}); result.items = [...]
 - IMPORTANT: Only wrap method RESULTS, not simple attribute assignments or access
 - For simple attribute operations like .value = X, just do: _context['value'] = X; result = _context['value']
-- IMPORTANT: Always pass wet={wet_val}, verbose={verbose_val} to inherit parent's settings
+- IMPORTANT: Always pass model='{self._model_name}', wet={wet_val}, verbose={verbose_val} to inherit parent's settings
 - NEVER use 'return' statements - just set the 'result' variable!
 - This makes everything more "gremllm-ey" and immersive"""
 
@@ -163,28 +164,27 @@ WET MODE EXAMPLES (return gremllm objects instead of plain values):
 ```python
 # Instead of: result = 42
 # Do this (NO return statement, just set result variable):
-result = Gremllm('number', wet={wet_val}, verbose={verbose_val})
+result = Gremllm('number', model='{self._model_name}', wet={wet_val}, verbose={verbose_val})
 result.value = 42
 ```
 
 ```python
 # Instead of: result = "hello world"
 # Do this (NO return statement, just set result variable):
-result = Gremllm('text', wet={wet_val}, verbose={verbose_val})
+result = Gremllm('text', model='{self._model_name}', wet={wet_val}, verbose={verbose_val})
 result.content = "hello world"
 ```
 
 ```python
 # Instead of: result = [1, 2, 3]
 # Do this (NO return statement, just set result variable):
-result = Gremllm('list', wet={wet_val}, verbose={verbose_val})
+result = Gremllm('list', model='{self._model_name}', wet={wet_val}, verbose={verbose_val})
 result.items = [1, 2, 3]
 ```
 
 IMPORTANT:
 - Never use 'return' statements - just set the 'result' variable!
-- Always pass wet={wet_val}, verbose={verbose_val} to inherit settings!"""
-
+- Always pass model='{self._model_name}', wet={wet_val}, verbose={verbose_val} to inherit settings!"""
         return f"""{action_desc}.
 
 Your current memory (self._context): {current_context}
